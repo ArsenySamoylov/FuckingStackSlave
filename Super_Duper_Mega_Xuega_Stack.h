@@ -43,10 +43,11 @@ enum unsigned MedComissionSS_err
 //******************** end of enum
 
 //******************** struct
-
-
 struct SuperStack
     {
+    // opening canary
+
+    //main
     element_t* heep;
     size_t     capacity;
     size_t     top;
@@ -58,13 +59,16 @@ struct SuperStack
 
     //debug info
     #ifndef NDEBUG
-    DebugInfo  dbg_inf;
+    InitInfo dbg_inf;
     #endif
+
+    // closing canary
 
     };
 
-//#define GZHA_UNDERSTOOD true
+//#define GZHA_UNDERSTOOD true //thx Ded
 
+/*
 #ifndef NDEBUG
 #define ON_SUPERDEBUG(...) __VA_ARGS__
 #define SRC_LOCATION   SrcLocation   { __FILE__, __func__, __LINE__ }
@@ -73,28 +77,29 @@ struct SuperStack
 #define ON_SUPERDEBUG(...) 
 #define SRC_LOCATION 
 #endif
+*/
 //******************** end of struct
 
 //******************** ptotytypes
 
-int SuperStackCtor (SuperStack* stk, int capacity
-                    ON_SUPERDEBUG (, DebugInitInfo   dbg)  );
+int SuperStackCtor (SuperStack* stk, int capacity);
+                    //ON_SUPERDEBUG (, DebugInitInfo   dbg)  );
 
-int SuperStackDtor (SuperStack* stk
-                    ON_SUPERDEBUG (, SrcLocationInfo loc)  );
+int SuperStackDtor (SuperStack* stk);
+                    //ON_SUPERDEBUG (, SrcLocationInfo loc)  );
 
 
-int       SSpush   (element_t value, int* err_flag = NULL
-                    ON_SUPERDEBUG(, SrcLocationInfo  loc)  );
+int       SSpush   (element_t value, int* err_flag = NULL);
+                   // ON_SUPERDEBUG(, SrcLocationInfo  loc)  );
 
-element_t SSpop    (int* err_flag = NULL
-                    ON_SUPERDEBUG(, SrcLocationInfo  loc)  );
+element_t SSpop    (int* err_flag = NULL);
+                    //ON_SUPERDEBUG(, SrcLocationInfo  loc)  );
 
-unsigned MedComissionSS (SuperStack* prezyvnik); // check if dead
+unsigned MedComissionSS (SuperStack* prezyvnik); //todo: check if dead
 
 void SSdump (SuperStack* negoden, unsigned flag_err = 0, 
-            int             LINE, const char* func,
-            int mode = DUMP_MODE );
+            SrcLocationInfo src_inf);
+            //int mode = DUMP_MODE ); think about it
 
 void* canary_calloc   (void* ptr, size_t numbers_of_elements, size_t size_of_elemet);
 void* canary_recalloc (void* ptr, size_t new_numb_of_elemnts, size_t size_of_elemnt);
@@ -109,10 +114,7 @@ void FillPoison (SuperStack* stk);
 
 //****************** shells
 // initialization
-#define STACK_CTOR(stk, capacity) SuperStackCtor (stk, capacity 
-                ON_SUPERDEBUG(, )); // добавить инициализацию дебаг инфо и обертку
-
-
+#define SafeStackCtor(stk_ptr, capacity) if(stk_ptr == NULL)
 
 //kill 
 #define STACK_DTOR(stk)           SuperStackDtor (stk, SRC_LOCATION);
@@ -157,13 +159,14 @@ int SuperStackCtor (SuperStack* stk, int capacity
         {
         dbg.    
         }
-    verificateSS (stk, );
+    if ( (int flag_err = verificateSS (stk)) != 0)
+        return flag_err;
 
     return SUCCESS_INITIALIZATION;
     }
 
-int SuperStackDtor (SuperStack* stk,
-                    const char* FILE, const char* FUNC, const char* FUNCTION)
+int SuperStackDtor (SuperStack* stk);
+                   // const char* FILE, const char* FUNC, const char* FUNCTION)
     {
     verificateSS(stk, LINE, FUNCTION)   
     }
