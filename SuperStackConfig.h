@@ -1,23 +1,19 @@
 #ifndef STACK_CONFIG
 #define STACK_CONGIG
 
-//************************************ include 
+#pragma ONCE
 
-//************************************ end of include files
-
-//************************************ typedef 
 //! @note if you want to change type of elements, than change this typefef
 typedef int element_t; 
-//******************** end of typedef
 
-//************************************ enum
-enum super_stack_status
-    {
-    UNINITIALIZED, // spelling
-    INITIALIZED,
-    INITIALIZATION_ERR,
-    DEAD,
-    DESTRUCTOR_ERR, //WALKING_DEAD
-    };
-//************************************ end of enum
+//! @note define NDEBUG if you want to release project
+#ifndef NDEBUG
+
+//! @note if this macros defined then dump will dump all
+//!          all elements from stack
+#define SSDUMP_ALL
+#endif
+
+#define GZHA_UNDERSTOOD true //thx Ded
+
 #endif
