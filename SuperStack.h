@@ -58,35 +58,35 @@ struct SuperStack
     };
 
 int  SuperStackCtor (SuperStack* stk, size_t capacity
-                     ON_SUPERDEBUG( , SrcLocationInfo init_inf)         );
+                     ON_SUPERDEBUG( , SrcLocationInfo init_inf)  );
 
 void SuperStackDtor (SuperStack* stk             
-                     ON_SUPERDEBUG( , SrcLocationInfo location) );
+                     ON_SUPERDEBUG( , SrcLocationInfo location)  );
 
-void      SSpush   (SuperStack* stk, element_t value
+void      SSpush    (SuperStack* stk, element_t value
                     ON_SUPERDEBUG( , SrcLocationInfo  location)  );
 
-element_t SSpop    (SuperStack* stk
-                    ON_SUPERDEBUG( , SrcLocationInfo  location) );
+element_t SSpop     (SuperStack* stk
+                    ON_SUPERDEBUG( , SrcLocationInfo  location)  );
 
-element_t SStop    (SuperStack* stk                                 // ded's old jokes: { return ZZTop(); }; 
-                    ON_SUPERDEBUG( , SrcLocationInfo location) ); 
+element_t SStop     (SuperStack* stk                               // ded's old jokes: { return ZZTop(); }; 
+                    ON_SUPERDEBUG( , SrcLocationInfo location)   ); 
 
 
 #define StackCtor(stk_ptr, capacity) SuperStackCtor (stk_ptr, capacity                \
                                             ON_SUPERDEBUG(, init_inf(stk_ptr)) );                                                                                             
 
 #define StackDtor(stk_ptr)           SuperStackDtor (stk_ptr                          \
-                                            ON_SUPERDEBUG(, src_loc(stk_ptr)) );
+                                            ON_SUPERDEBUG(, src_loc(stk_ptr))  );
           
 #define StackPush(stk_ptr, value)        SSpush     (stk_ptr, value                   \
-                                            ON_SUPERDEBUG(, src_loc(stk_ptr)) );
+                                            ON_SUPERDEBUG(, src_loc(stk_ptr))  );
 
 #define StackPop(stk_ptr)                SSpop      (stk_ptr                          \
-                                            ON_SUPERDEBUG(, src_loc(stk_ptr)) );
+                                            ON_SUPERDEBUG(, src_loc(stk_ptr))  );
 
 #define StackTop(stk_ptr)                SStop      (stk_pte                          \
-                                            ON_SUPERDEBUG(, src_loc(stk_ptr)) );
+                                            ON_SUPERDEBUG(, src_loc(stk_ptr))  );
 
 void SSdump (SuperStack* negoden, unsigned flag_err, 
              SrcLocationInfo src_inf, const char* calling_func);
@@ -95,7 +95,7 @@ unsigned MedComissionSS (SuperStack* prezyvnik);
 
 #define verificateSS(soldat, SrsLoc, ...)                             \
     unsigned flag_err = MedComissionSS (soldat);                      \
-    if (flag_err != 0) { SSdump (soldat, flag_err, SrsLoc, __func__); return __VA_ARGS__; } 
+    /*printf("I am verifiacator, error flag = %d\n", flag_err); */if (flag_err != 0) { SSdump (soldat, flag_err, SrsLoc, __func__); return __VA_ARGS__; } 
 
 void FillPoisonHeap  (element_t* heap, size_t size);
 

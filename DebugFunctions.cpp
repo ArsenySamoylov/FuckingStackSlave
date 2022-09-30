@@ -1,4 +1,3 @@
-
 #include "DebugFunctions.h"
 #include "SuperStack.h"
 
@@ -8,16 +7,16 @@ unsigned MedComissionSS (SuperStack* soldat)
 
     if (soldat == NULL)
         return (flag_error |= NULL_STK_PTR_ERR);
-
-    if (soldat->status != INITIALIZED)
-        flag_error |= WRONG_STK_STATUS;
     
+    if (soldat->status != INITIALIZED)
+         flag_error |= WRONG_STK_STATUS;
+
     if (soldat->heap == NULL)
         flag_error |= NULL_STK_HEAP;
-    
-    //if (soldat->capacity > 0)
-      //  flag_error |= WRONG_STK_CAPACITY;
-    
+
+    if (soldat->capacity < 0)
+        flag_error |= WRONG_STK_CAPACITY;
+
     if (soldat->top < -1)
         flag_error |= WRONG_STK_TOP;
     
@@ -38,11 +37,11 @@ unsigned MedComissionSS (SuperStack* soldat)
         if (*check_closing != _CLOSING_CANARY_)
             flag_error |= DEAD_HEAPCLOSING_CANARY;
         
-        //printf("%0x, %0x, soldat = %p, capacity = %d\n", *check_opening, *check_closing, soldat, soldat->capacity);
+        printf("%0x, %0x, soldat = %p, capacity = %d\n", *check_opening, *check_closing, soldat, soldat->capacity);
         }
 
     //check hash
-    printf("%u I Am MEDcomission\n", flag_error);
+    printf("I Am MEDcomission END RESULT: %d\n", flag_error);
     return flag_error;
     }
 

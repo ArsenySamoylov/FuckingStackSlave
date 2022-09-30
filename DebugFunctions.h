@@ -8,15 +8,15 @@
 
 unsigned enum MedComissionSS_err
     {
-    NULL_STK_PTR_ERR   = 0x1 << 1,
-    NULL_STK_HEAP      = 0x1 << 2,
-    WRONG_STK_STATUS   = 0x1 << 3,
-    WRONG_STK_CAPACITY = 0x1 << 4, 
-    WRONG_STK_TOP      = 0x1 << 5,
-    DEAD_STACKOPENING_CANARY = 0x1 << 6,
-    DEAD_STACKCLOSING_CANARY = 0x1 << 7,
-    DEAD_HEAPOPENING_CANARY  = 0x1 << 8,
-    DEAD_HEAPCLOSING_CANARY  = 0x1 << 9,
+    NULL_STK_PTR_ERR   = 0x1 << 0,
+    NULL_STK_HEAP      = 0x1 << 1,
+    WRONG_STK_STATUS   = 0x1 << 2,
+    WRONG_STK_CAPACITY = 0x1 << 3, 
+    WRONG_STK_TOP      = 0x1 << 4,
+    DEAD_STACKOPENING_CANARY = 0x1 << 5,
+    DEAD_STACKCLOSING_CANARY = 0x1 << 6,
+    DEAD_HEAPOPENING_CANARY  = 0x1 << 7,
+    DEAD_HEAPCLOSING_CANARY  = 0x1 << 8,
     };
 
 const int    IntPoison    = 0xBADDED;

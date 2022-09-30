@@ -4,20 +4,21 @@ int SuperStackCtor (SuperStack* stk, size_t capacity
                    ON_SUPERDEBUG(, SrcLocationInfo init_inf) )
     {
     if (stk == NULL)                         return NULL_STK_PTR_CTR;
-    //if (capacity < 0)                         return WRONG_CAPACITY;
+    if (capacity < 0)                         return WRONG_CAPACITY;
     if (stk->status != UNINITIALIZED)        return INITIALIZED_STACK;
 
     stk->capacity = capacity;
     stk->top      = -1;
+    stk->status   = INITIALIZED;
 
     if (capacity > 0) 
         stk->heap = (element_t*) canary_calloc (capacity, sizeof (element_t));
 
     stk->opening_canary = _OPENING_CANARY_;
     stk->closing_canary = _CLOSING_CANARY_;
+
     #ifndef NDEBUG
     FillPoisonHeap (stk->heap, capacity);
-
     stk->init_inf = init_inf;
     #endif
 
