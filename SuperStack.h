@@ -1,7 +1,11 @@
 #ifndef SUPER_DUPER_MEGA_XUEGA_STACK
 #define SUPER_DUPER_MEGA_XUEGA_STACK
 
-#pragma once
+//! @note if you want to change settings than
+//!          look up in SuperStackConfig.h
+#include "SuperStackConfig.h"
+#include "my_safety.h"
+#include "my_log.h"
 
 #ifndef NDEBUG
 #define ON_SUPERDEBUG(...) __VA_ARGS__
@@ -9,15 +13,8 @@
 #define ON_SUPERDEBUG(...)
 #endif
 
-//! @note if you want to change settings than
-//!          look up in SuperStackConfig.h
-#include "SuperStackConfig.h"
-#include "my_safety.h"
-#include "my_log.h"
-
-
-const int _HEAP_MIN_CAPACITY_ = 10;
-const int _ELEMENT_T_SIZE_    = sizeof(element_t);
+const size_t _HEAP_MIN_CAPACITY_ = 10;
+const size_t _ELEMENT_T_SIZE_    = sizeof(element_t);
 
 enum super_stack_status
     {
@@ -30,10 +27,10 @@ enum super_stack_status
 
 enum SuperStackCtorErr
     {
-    NULL_STK_PTR_CTR   = -2,
-    WRONG_CAPACITY     = -3,
-    INITIALIZED_STACK  = -4,
-
+    NULL_STK_PTR_CTR       = -2,
+    WRONG_CAPACITY         = -3,
+    INITIALIZED_STACK      = -4,
+//**************************************//
     ERROR_INITIALIZATION   = -1,
     SUCCESS_INITIALIZATION =  1,
     };
@@ -42,11 +39,11 @@ struct SuperStack
     {
     CANARY opening_canary;
 
-    element_t* heap = NULL; 
+    element_t* heap;// NULL is zero
     size_t     capacity;
-    ssize_t     top;
+    ssize_t    top;
 
-    int status = UNINITIALIZED;
+    int status;// UNINITIALIZED is zero
 
     //hash
 
@@ -91,11 +88,10 @@ element_t SStop     (SuperStack* stk                               // ded's old 
 void SSdump (SuperStack* negoden, unsigned flag_err, 
              SrcLocationInfo src_inf, const char* calling_func);
 
-unsigned MedComissionSS (SuperStack* prezyvnik); 
+#define fuckDump(stk)   \
+    SSdump(stk, MedComissionSS(stk), init_inf(stk), __func__) /// It`s beter than your shit
 
-#define verificateSS(soldat, SrsLoc, ...)                             \
-    unsigned flag_err = MedComissionSS (soldat);                      \
-    /*printf("I am verifiacator, error flag = %d\n", flag_err); */if (flag_err != 0) { SSdump (soldat, flag_err, SrsLoc, __func__); return __VA_ARGS__; } 
+unsigned MedComissionSS (SuperStack* prezyvnik); 
 
 void FillPoisonHeap  (element_t* heap, size_t size);
 

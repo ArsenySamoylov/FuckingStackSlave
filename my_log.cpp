@@ -1,6 +1,7 @@
+#include <stdlib.h>
 #include "my_log.h"
 
-FILE* my_log = OpenLog(LOGNAME);
+static FILE* my_log = OpenLog(LOGNAME);
 
 FILE* GetLog()
     {
@@ -9,11 +10,14 @@ FILE* GetLog()
 
 FILE* OpenLog(const char* log_name)
     {
-    FILE* file = fopen(log_name, "w");
+    FILE* file = fopen(log_name ? log_name : "", "w");
+
+    if (!file)
+        file = stdout;
 
     atexit(CloseLog);
 
-    return (file == NULL) ? stdin : file;   
+    return file;//(file == NULL) ? ?????stdin?????? : file;   
     }
 
 void CloseLog()
@@ -21,6 +25,7 @@ void CloseLog()
     fputs("\n****************************************************", my_log);
     fputs("\n                Log Successfuly ended               ", my_log);
     fputs("\n****************************************************", my_log);
-    if (my_log != stdin)
+
+    if (my_log && my_log != stdout)
         fclose(my_log);
     }
