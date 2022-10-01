@@ -1,4 +1,4 @@
-#include "SuperStack.h"
+﻿#include "SuperStack.h"
 
 #define verificateSS(soldat, SrsLoc, ...)                             \
     do                                                                \
@@ -13,6 +13,13 @@
         }                                                             \
     } while (0)
 
+#define KURWĄ_HASH(stk)                                                     \
+do                                                                          \
+{                                                                           \
+    stk->heapHash = generateHash(stk->heap, stk->heap + stk->capacity);     \
+                                                                            \
+    stk->hash     = generateHash(&stk->opening_canary, &stk->heapHash);     \
+} while (0)
 
 int SuperStackCtor (SuperStack* stk, size_t capacity
                    ON_SUPERDEBUG(, SrcLocationInfo init_inf) )
@@ -36,10 +43,7 @@ int SuperStackCtor (SuperStack* stk, size_t capacity
     stk->init_inf = init_inf;
     #endif
 
-    //hash
-    //not yet
-
-    //verification 
+    KURWĄ_HASH(stk);
     verificateSS(stk, init_inf, ERROR_INITIALIZATION);
 
     return SUCCESS_INITIALIZATION;
@@ -79,6 +83,9 @@ void  SSpush (SuperStack* stk, element_t value
 
     (stk->heap)[stk->top] = value;
     (stk->top)++;
+
+    KURWĄ_HASH(stk);
+    verificateSS(stk, location);
     }
 
  element_t SSpop    (SuperStack* stk
@@ -95,7 +102,12 @@ void  SSpush (SuperStack* stk, element_t value
     if (stk->top == -1)
         return 0;
 
-    return (stk->heap)[(stk->top)--];
+    element_t temp = stk->heap[(stk->top)--];
+
+    KURWĄ_HASH(stk);
+    verificateSS(stk, location, 0);
+
+    return temp;
     }
 
 element_t SStop   (SuperStack* stk 

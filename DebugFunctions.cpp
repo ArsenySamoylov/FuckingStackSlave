@@ -1,4 +1,4 @@
-#include <math.h>
+﻿#include <math.h>
 #include "DebugFunctions.h"
 #include "SuperStack.h"
 
@@ -38,10 +38,15 @@ unsigned MedComissionSS (SuperStack* soldat)
         if (*check_closing != _CLOSING_CANARY_)
             flag_error |= DEAD_HEAPCLOSING_CANARY;
         
-        // Why frintf? printf("%0x, %0x, soldat = %p, capacity = %d\n", *check_opening, *check_closing, soldat, soldat->capacity);
+        // Why printf? printf("%0x, %0x, soldat = %p, capacity = %d\n", *check_opening, *check_closing, soldat, soldat->capacity);
+
+        if (generateHash(soldat->heap, soldat->heap + soldat->capacity) != soldat->heapHash)
+            flag_error |= HASZYSZ_KUPY_GÓWNO;
         }
 
-    //check hash
+    if (generateHash(&soldat->opening_canary, &soldat->heapHash) != soldat->hash)
+        flag_error |= HASZYSZ_GÓWNO;
+
     printf("I Am MEDcomission END RESULT: 0b");
     for (int i = 0; i < 14; ++i)
         printf("%d", (flag_error >> i) & 0x01);

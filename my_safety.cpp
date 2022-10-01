@@ -1,6 +1,7 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 #include "my_safety.h"
 
+const int POCZĄTKOWE_PRZESUNIĘCIE_STOSU = 17;
 
 void* canary_calloc(size_t number_of_elements, size_t size_of_element)
     {
@@ -47,4 +48,18 @@ void* canary_realloc(void* ptr, size_t new_numbers_of_elements, size_t size_of_e
 void canary_free (void* ptr)
     {
     free((char*)ptr - _CANARY_SIZE_);
+    }
+
+int generateHash(const void* start, const void* end)
+    {
+    if (!start || !end)
+        return 0;
+
+
+    int hash = POCZĄTKOWE_PRZESUNIĘCIE_STOSU;
+
+    for (const char* ptr = (const char *)start; ptr != end; ++ptr)
+        hash += *ptr << 5 + *ptr + *(char *)start;
+
+    return hash;
     }

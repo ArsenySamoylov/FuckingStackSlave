@@ -45,11 +45,12 @@ struct SuperStack
 
     int status;// UNINITIALIZED is zero
 
-    //hash
-
     #ifndef NDEBUG
     SrcLocationInfo init_inf;
     #endif
+
+    int heapHash;
+    int hash;
 
     CANARY closing_canary;
     };
