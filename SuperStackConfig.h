@@ -1,8 +1,6 @@
 #ifndef STACK_CONFIG
 #define STACK_CONGIG
 
-#pragma ONCE
-
 //! @note if you want to change type of elements, than change this typefef
 typedef int element_t; 
 

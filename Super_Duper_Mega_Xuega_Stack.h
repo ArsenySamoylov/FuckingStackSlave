@@ -1,3 +1,5 @@
+/// This file nothing use in youe programm
+
 #ifndef SUPER_DUPER_MEGA_XUEGA_STACK
 #define SUPER_DUPER_MEGA_XUEGA_STACK
 
@@ -23,10 +25,10 @@ enum super_stack_status
 
 enum SuperStackCtorErr
     {
-    NULL_STK_PTR      = -1,
-    WRONG_CAPACITY    = -2,
-    INITILIZED_STACK  = -3,
-
+    NULL_STK_PTR           = -1,
+    WRONG_CAPACITY         = -2,
+    INITILIZED_STACK       = -3,
+//**************************************//
     SUCCESS_INITIALIZATION =  1,
     };
 
@@ -38,7 +40,7 @@ enum SSdump_mode // запихнуть в log.h
 
 enum unsigned MedComissionSS_err
     {
-        
+    WITHOUT_ERROR_CODE_ERROR = 0,
     };
 //******************** end of enum
 
